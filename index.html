@@ -112,15 +112,16 @@
     <p>
       현재 프로젝트의 실제 프론트엔드는 <code>frontend/</code>의 Next.js 앱이고,
       실시간 가격 서버는 <code>backend/</code>의 Express + Socket.IO 서버입니다.
+      외부 URL에서 <code>localhost</code> 링크를 누르면 사용자 기기 자신의 로컬 주소를 찾기 때문에 실패합니다.
     </p>
     <ol>
-      <li><code>npm run dev:backend</code>로 백엔드를 실행합니다.</li>
-      <li><code>npm run dev:frontend</code>로 프론트를 실행합니다.</li>
-      <li><code>http://localhost:3000</code>에서 새 사이트를 확인합니다.</li>
+      <li>프론트는 Vercel에 <code>/frontend</code> 루트로 배포합니다.</li>
+      <li>백엔드는 Railway 또는 Render에 <code>/backend</code> 루트로 배포합니다.</li>
+      <li>프론트 환경 변수 <code>NEXT_PUBLIC_SOCKET_URL</code>에 배포된 백엔드 주소를 넣습니다.</li>
     </ol>
     <div class="link-row">
-      <a class="primary" href="http://localhost:3000">frontend 열기</a>
-      <a class="secondary" href="/README.md">README 보기</a>
+      <a class="primary" href="/README.md">배포 순서 보기</a>
+      <a class="secondary" href="https://github.com/jeongjaem/Lets-go">GitHub 저장소</a>
     </div>
   </main>
 </body>
