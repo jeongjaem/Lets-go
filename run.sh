@@ -4,14 +4,27 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-port="${1:-8080}"
+if [[ ! -d node_modules || ! -d frontend/node_modules || ! -d backend/node_modules ]]; then
+  echo "Dependencies are not installed yet."
+  echo
+  echo "Run:"
+  echo "  npm install"
+  echo
+  echo "Then start the apps in two terminals:"
+  echo "  npm run dev:backend"
+  echo "  npm run dev:frontend"
+  exit 1
+fi
 
-echo "Serving /workspaces/Lets-go on port ${port}"
-echo "Open:"
-echo "  http://localhost:${port}"
-echo
-echo "If you are using Codespaces, open the 'Ports' tab and click the forwarded URL for port ${port}."
-echo "Press Ctrl+C to stop the server."
-echo
+cleanup() {
+  if [[ -n "${backend_pid:-}" ]]; then
+    kill "${backend_pid}" >/dev/null 2>&1 || true
+  fi
+}
 
-exec python3 -m http.server "${port}" --bind 0.0.0.0
+trap cleanup EXIT INT TERM
+
+npm run dev:backend &
+backend_pid=$!
+
+npm run dev:frontend
